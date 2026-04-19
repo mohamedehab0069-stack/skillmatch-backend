@@ -1,0 +1,391 @@
+{
+  "info": {
+    "name": "SkillMatch+ API",
+    "description": "Complete REST API for SkillMatch+ — Project #38, HNU BIDT 2025",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url",      "value": "http://localhost:5000" },
+    { "key": "student_token", "value": "" },
+    { "key": "company_token", "value": "" },
+    { "key": "admin_token",   "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": { "method": "GET", "url": "{{base_url}}/health" }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Victoria Marawan\",\n  \"email\": \"viky@test.com\",\n  \"password\": \"Test1234\",\n  \"role\": \"student\",\n  \"university\": \"Helwan National University\",\n  \"major\": \"Business Informatics\",\n  \"graduation_year\": 2025\n}"
+            }
+          }
+        },
+        {
+          "name": "Register Company",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HR Manager\",\n  \"email\": \"hr@company.com\",\n  \"password\": \"Test1234\",\n  \"role\": \"company\",\n  \"company_name\": \"TechCorp Egypt\",\n  \"industry\": \"Software\",\n  \"website\": \"https://techcorp.eg\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"viky@test.com\",\n  \"password\": \"Test1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/students/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/students/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"linkedin_url\": \"https://linkedin.com/in/viky\",\n  \"github_url\": \"https://github.com/viky\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Skill",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/students/skills",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skill_name\": \"Python\",\n  \"proficiency\": \"intermediate\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/students/dashboard"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assessment",
+      "item": [
+        {
+          "name": "Get Questions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/assessment/questions"
+          }
+        },
+        {
+          "name": "Submit Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/assessment/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\"question_id\": 1, \"answer\": \"Break it into a detailed plan with clear milestones\"},\n    {\"question_id\": 2, \"answer\": \"Analysing data to find hidden patterns\"},\n    {\"question_id\": 3, \"answer\": \"Read documentation and research thoroughly\"},\n    {\"question_id\": 4, \"answer\": \"Database design and query optimisation\"},\n    {\"question_id\": 5, \"answer\": \"The organiser who tracks progress and deadlines\"},\n    {\"question_id\": 6, \"answer\": \"Make businesses run more efficiently\"},\n    {\"question_id\": 7, \"answer\": \"Technical coding skills\"},\n    {\"question_id\": 8, \"answer\": \"Very comfortable - I enjoy statistics and analytics\"},\n    {\"question_id\": 9, \"answer\": \"Creative freedom and innovation\"},\n    {\"question_id\": 10, \"answer\": \"A technical specialist (developer, data scientist, architect)\"}\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Persona",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/assessment/persona"
+          }
+        },
+        {
+          "name": "Assessment History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/assessment/history"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roadmap",
+      "item": [
+        {
+          "name": "Get Roadmap",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/roadmap/"
+          }
+        },
+        {
+          "name": "Mark Course Complete",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/roadmap/courses/1/complete"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "List Active Tasks",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/tasks/"
+          }
+        },
+        {
+          "name": "Submit Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/tasks/1/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submission_content\": \"I built a REST API using Flask and MySQL.\",\n  \"submission_url\": \"https://github.com/viky/my-task\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Task (Company)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{company_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/tasks/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Build a REST API\",\n  \"description\": \"Create a simple CRUD REST API using Flask and MySQL for a todo list app.\",\n  \"category\": \"Backend\",\n  \"difficulty\": \"medium\",\n  \"points\": 20\n}"
+            }
+          }
+        },
+        {
+          "name": "Review Submission (Company)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{company_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/tasks/submissions/1/review",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\",\n  \"score\": 90,\n  \"feedback\": \"Excellent implementation! Clean code and well-structured API.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Internships",
+      "item": [
+        {
+          "name": "List Internships with Match",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/internships/"
+          }
+        },
+        {
+          "name": "Apply to Internship",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/internships/1/apply",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cover_note\": \"I am a Business Informatics student with strong backend skills and I am very interested in this role.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "My Applications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/internships/my-applications"
+          }
+        },
+        {
+          "name": "Post Internship (Company)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{company_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/internships/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Backend Developer Intern\",\n  \"description\": \"Join our team to build REST APIs using Python and Flask.\",\n  \"location\": \"Cairo, Egypt\",\n  \"is_remote\": false,\n  \"required_skills\": [\"Python\", \"Flask\", \"MySQL\", \"REST API Design\"],\n  \"duration_weeks\": 8,\n  \"application_deadline\": \"2025-09-01\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Applicants (Company)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{company_token}}" }],
+            "url": "{{base_url}}/api/internships/1/applicants?min_score=50"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portfolio",
+      "item": [
+        {
+          "name": "Get My Portfolio",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/portfolio/"
+          }
+        },
+        {
+          "name": "Public Portfolio",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/portfolio/public/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/notifications/?unread=true"
+          }
+        },
+        {
+          "name": "Mark All Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/notifications/read-all"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": "{{base_url}}/api/admin/dashboard"
+          }
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": "{{base_url}}/api/admin/users?role=student"
+          }
+        },
+        {
+          "name": "Approve Task",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/admin/tasks/1/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"approved\": true }"
+            }
+          }
+        },
+        {
+          "name": "Verify Company",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": "{{base_url}}/api/admin/users/2/verify-company"
+          }
+        }
+      ]
+    }
+  ]
+}
